@@ -1,105 +1,81 @@
-
-import math
-from tkinter  import *
-from tkinter import ttk
-import math
-
-
-root = Tk()
-root.title("calculator")
-root.geometry("+500+80")
-
-estilos = ttk.Style()
-estilos.configure ('mainframe.TFrame',background='#CECECE')
-estilos.theme_use('clam')
-mainframe = ttk.Frame(root,style="mainframe.TFrame")
-mainframe.grid(column=0,row=0)
+from tkinter import *
+from unittest import result
+i=0
+ventana = Tk()
+ventana.title("calculadora")
 
 
-#estilos labels
-estilos_label_1 = ttk.Style()
-estilos_label_1.configure('Label1.TLabel', font="arial 15", anchor="E")
+#Entrada
+e_texto = Entry(ventana,font = ("Calibri 20"))
+e_texto.grid(row =0, column=0, columnspan =4, padx=5, pady=5)
 
-estilos_label_2 = ttk.Style()
-estilos_label_2.configure('Label2.TLabel', font = "arial 15", anchor="E")
-#generando widget  col 0 fil0
+#botones
+boton_0 = Button(ventana,text="0", width=5,height=2,command=lambda:click_boton(0))
+boton_1 = Button(ventana,text="1", width=5,height=2,command=lambda:click_boton(1))
+boton_2 = Button(ventana,text="2", width=5,height=2,command=lambda:click_boton(2))
+boton_3 = Button(ventana,text="3", width=5,height=2,command=lambda:click_boton(3))
+boton_4 = Button(ventana,text="4", width=5,height=2,command=lambda:click_boton(4))
+boton_5 = Button(ventana,text="5", width=5,height=2,command=lambda:click_boton(5))
+boton_6 = Button(ventana,text="6", width=5,height=2,command=lambda:click_boton(6))
+boton_7 = Button(ventana,text="7", width=5,height=2,command=lambda:click_boton(7))
+boton_8 = Button(ventana,text="8", width=5,height=2,command=lambda:click_boton(8))
+boton_9 = Button(ventana,text="9", width=5,height=2,command=lambda:click_boton(9))
 
-#entrada de texto
-entrada1= StringVar()
-label_entrada1 = ttk.Label(mainframe, textvariable =entrada1 , style="Label1.TLabel")
-label_entrada1.grid(column=0,row=0, columnspan=4, sticky=(W,E))
+boton_borrar = Button(ventana,text="AC", width=5,height=2,command=lambda:borrar())
+boton_parentesis_1= Button(ventana,text="(", width=5,height=2,command=lambda:click_boton("("))
+boton_parentesis_2 = Button(ventana,text=")", width=5,height=2,command=lambda:click_boton(")"))
+boton_punto = Button(ventana,text=".", width=5,height=2,command=lambda:click_boton("."))
 
-#entrada de texto
-entrada2 = StringVar()
-label_entrada2 = ttk.Label(mainframe, textvariable = entrada2, style="Label2.TLabel")
-label_entrada2.grid(column=0,row=1,columnspan=4, sticky=(W,E))
-
-#estilos de los btones
-estilos_botones_numeros = ttk.Style()
-estilos_botones_numeros.configure('botones_numeros.TButton', font="arial 32", width=5, background="#CECECE", relief="flat")
-estilos_botones_borrar = ttk.Style()
-estilos_botones_borrar.configure('botones_borrar.TButton', font="arial 32", width=5, background="#CECECE", relief="flat")
-estilos_botones_borrar.map('botones_borrar.TButton', foreground =[('active','#FF0000')],background=[('active','#858585')])
-estilos_botones_restantes = ttk.Style()
-estilos_botones_restantes.configure('botones_restantes.TButton', font="arial 32", width=5, background="#CECECE", relief="flat")
-#creando botones
-button0 = ttk.Button(mainframe, text="0",style='botones_numeros.TButton')
-button1 = ttk.Button(mainframe, text="1",style='botones_numeros.TButton')
-button2 = ttk.Button(mainframe, text="2",style='botones_numeros.TButton')
-button3 = ttk.Button(mainframe, text="3",style='botones_numeros.TButton')
-button4 = ttk.Button(mainframe, text="4",style='botones_numeros.TButton')
-button5 = ttk.Button(mainframe, text="5",style='botones_numeros.TButton')
-button6 = ttk.Button(mainframe, text="6",style='botones_numeros.TButton')
-button7 = ttk.Button(mainframe, text="7",style='botones_numeros.TButton')
-button8 = ttk.Button(mainframe, text="8",style='botones_numeros.TButton')
-button9 = ttk.Button(mainframe, text="9",style='botones_numeros.TButton')
-button10 = ttk.Button(mainframe, text="10",style='botones_numeros.TButton')
-
-#botones operaciones
-button_borrar = ttk.Button(mainframe, text="<--",style='botones_borrar.TButton')
-button_borrar_todo = ttk.Button(mainframe,text="C",style='botones_borrar.TButton')
-button_parentesis1 = ttk.Button(mainframe,text="(",style='botones_restantes.TButton')
-button_parentesis2 = ttk.Button(mainframe,text=")",style='botones_restantes.TButton')
-button_punto = ttk.Button(mainframe,text=".",style='botones_restantes.TButton')
-button_igual = ttk.Button(mainframe,text="=",style='botones_restantes.TButton')
-
-button_division = ttk.Button(mainframe,text="/",style='botones_restantes.TButton')
-button_multiplicacion = ttk.Button(mainframe,text="x",style='botones_restantes.TButton')
-button_resta = ttk.Button(mainframe,text="-",style='botones_restantes.TButton')
-button_suma = ttk.Button(mainframe,text="+",style='botones_restantes.TButton')
-button_raiz_cuadrada = ttk.Button(mainframe,text="√",style='botones_restantes.TButton')
+boton_div = Button(ventana,text="/", width=5,height=2,command=lambda:click_boton("/"))
+boton_mult = Button(ventana,text="*", width=5,height=2,command=lambda:click_boton("*"))
+boton_sum = Button(ventana,text="+", width=5,height=2,command=lambda:click_boton("+"))
+boton_rest = Button(ventana,text="-", width=5,height=2,command=lambda:click_boton("-"))
+boton_igual = Button(ventana,text="=", width=5,height=2,command=lambda:operacion())
 
 
-#colocando botones en pantalla
-button_parentesis1.grid(column=0, row=2)
-button_parentesis2.grid(column=1, row=2)
-button_borrar_todo.grid(column=2, row=2)
-button_borrar.grid(column=3, row=2)
+#agregando botones a pantalla
 
-button7.grid(column=0, row=3)
-button8.grid(column=1, row=3)
-button9.grid(column=2, row=3)
-button_division.grid(column=3, row=3)
-button4.grid(column=0, row=4)
-button5.grid(column=1, row=4)
-button6.grid(column=2, row=4)
-button_multiplicacion.grid(column=3, row=4)
+boton_1.grid(row=4,column=0,padx=5,pady=5)
+boton_2.grid(row=4,column=1,padx=5,pady=5)
+boton_3.grid(row=4,column=2,padx=5,pady=5)
+boton_rest.grid(row=4,column=3,padx=5,pady=5)
 
-button1.grid(column=0, row=5)
-button2.grid(column=1, row=5)
-button3.grid(column=2, row=5)
-button_suma.grid(column=3, row=5)
+boton_4.grid(row=3,column=0,padx=5,pady=5)
+boton_5.grid(row=3,column=1,padx=5,pady=5)
+boton_6.grid(row=3,column=2,padx=5,pady=5)
+boton_sum.grid(row=3,column=3,padx=5,pady=5)
 
-button0.grid(column=0, row=6, columnspan=2,sticky=(W,E))
-button_punto.grid(column=2, row=6)
-button_resta.grid(column=3, row=6)
+boton_7.grid(row=2,column=0,padx=5,pady=5)
+boton_8.grid(row=2,column=1,padx=5,pady=5)
+boton_9.grid(row=2,column=2,padx=5,pady=5)
+boton_mult.grid(row=2,column=3,padx=5,pady=5)
 
-button_igual.grid(column=0, row=7,columnspan=3,sticky=(W,E))
-button_raiz_cuadrada.grid(column=3, row=7)
+boton_borrar.grid(row=1,column=0,padx=5,pady=5)
+boton_parentesis_1.grid(row=1,column=1,padx=5,pady=5)
+boton_parentesis_2.grid(row=1,column=2,padx=5,pady=5)
+boton_punto.grid(row=1,column=3,padx=5,pady=5)
 
-for child in mainframe.winfo_children():
-    child.grid_configure(ipady=10 ,padx=1, pady=1)
+boton_0.grid(row=5,column=0,columnspan=2,padx=5,pady=5,sticky=(W))
+boton_div.grid(row=5,column=1,padx=5,pady=5)
+boton_igual.grid(row=5,column=2,padx=5,pady=5)
 
 
-#nn
-root.mainloop()
+#funciones
+
+def click_boton(valor):
+    global i
+    e_texto.insert(i,valor)
+    i += 1
+
+def borrar():
+    e_texto.delete(0,END)
+    i = 0
+
+def operacion():
+    ecuacion = e_texto.get()
+    resultado = eval(ecuacion)
+    e_texto.delete(0,END)
+    e_texto.insert(0,resultado)
+    i = 0
+
+ventana.mainloop()
